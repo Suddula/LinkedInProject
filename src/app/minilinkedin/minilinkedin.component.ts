@@ -15,6 +15,7 @@ export class MinilinkedinComponent implements OnInit {
   // linkedIdData: any;
   linkedIdData:Array<LinkedInList>;
   objLinkedInData:LinkedinPost= new LinkedinPost();
+  isPostmsg: boolean=false;
   constructor(
     // private readonly fb:FormBuilder,
     public readonly linkedInService:LinkedinServiceService,
@@ -52,16 +53,21 @@ export class MinilinkedinComponent implements OnInit {
   NewLinkedIn():void{
     this.objLinkedInData= new LinkedinPost();
   }
-
+  IsProperName(value : string) : boolean{ 
+    let re  = new RegExp('^[A-Z][a-z]+\\s[A-Z][a-z]+');
+    return re.test(value);
+  }
   SaveData(linkedInForm:any):void {
      // first way writen Api call
      if(!linkedInForm.form.valid){
+       this.isPostmsg = true;
         return;
      }else{
       this.linkedInService.postLinkedin(this.objLinkedInData).subscribe(result=>{
         this.linkedInService.getAllLinkedins().subscribe(list=>{
-          this.linkedIdData = list
-        })
+          this.linkedIdData = list;
+        });
+        this.isPostmsg = false;
         this.NewLinkedIn();
       });
      }

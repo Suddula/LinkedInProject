@@ -11,12 +11,13 @@
     <div class="mb-3" *ngIf="currentIndex === i">
         <form #commentsForm="ngForm">
             <label for="comments" class="form-label">Comments</label>
-            <input type="text" #commentsText=ngModel class="form-control" id="comments" name="commentsText" [(ngModel)]="linkedInCommentsData.comments" placeholder="Enter Comments">
-            <span [hidden]="commentsText.valid || commentsText.pristine">Please Enter Comments Required</span>
-            <button type="button" class="btn btn-link" (click)="SaveComments(i,item.id,commentsForm)">Post Comment</button>
+            <input type="text" #commentsText=ngModel class="form-control" id="comments" name="commentsText" [(ngModel)]="linkedInCommentsData.comments" placeholder="Enter Comments" required>
+            <span class="errormsg" *ngIf="isComments===true && commentsText.invalid ">Please Enter Comments Required</span>
+            <button type="button" class="btn btn-link" (click)="SaveComments(commentsForm,i,item.id)">Post Comment</button>
         </form>
         <div *ngFor="let itemCmt of item.linkedInComments">
-            <p class="cmntdiv">{{itemCmt.comments}}</p> <a type="button" class="btn btn-link" (click)="deleteLinked(i,item.id)">Delete</a>
+            <p class="cmntdiv">{{itemCmt.comments}}</p> 
+            <!-- <a type="button" class="btn btn-link" (click)="deletLinkedinComments(i,itemCmt.postId)">Delete</a> -->
         </div> 
     </div>
     

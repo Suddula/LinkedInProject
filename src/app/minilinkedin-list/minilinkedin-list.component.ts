@@ -17,6 +17,7 @@ export class MinilinkedinListComponent implements OnInit {
   liked: boolean = false;
   highlightTrue: boolean= false;
   likeCount:number =0;
+  isComments: boolean=false;
   constructor(
     public readonly linkedInService:LinkedinServiceService,
   ) {
@@ -48,22 +49,35 @@ export class MinilinkedinListComponent implements OnInit {
       })
     });
   }
-  SaveComments(i:number|undefined,id:number|undefined,commentsForm:any):void{
-    if(!commentsForm.form.vaild){
-        return;
-    }else{
-      
+  SaveComments(commtForm:any,i:number|undefined,id:number|undefined):void{
+    console.log('commtForm',commtForm.form.valid);
+    if(commtForm.form.valid){
       this.linkedInService.postLinkedinComments(id,this.linkedInCommentsData).subscribe(result=>{
         this.linkedInService.getAllLinkedins().subscribe(commentsList=>{
           this.linkedInList =commentsList;
         })
+        this.isComments = false;
         this.linkedInCommentsData.comments ="";
       });
+      }else{
+      this.isComments = true;
+      return;
     }
    
   }
   deleteLinked(i:number|undefined,id:number|undefined):void{
     this.linkedInService.deletLinkedin(id).subscribe(result=>{
+      this.linkedInService.getAllLinkedins().subscribe(
+        data=>{
+          this.linkedInList = data;
+        }
+      )
+    })
+
+  }
+  
+  deletLinkedinComments(i:number|undefined,id:number|undefined):void{
+    this.linkedInService.deletLinkedinComments(id).subscribe(result=>{
       this.linkedInService.getAllLinkedins().subscribe(
         data=>{
           this.linkedInList = data;

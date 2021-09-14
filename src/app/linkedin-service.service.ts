@@ -41,7 +41,9 @@ export class LinkedinServiceService {
     return this.http.post<Array<LinkedInComments>>(`${this.baseurl}/comments/${id}`,data);
   }
   deletLinkedin(id:number|undefined):Observable<Array<LinkedinPost>>{
-    return this.http.delete<Array<LinkedinPost>>(`${this.baseurl}/delete/${id}`);
+    return this.http.delete<Array<LinkedinPost>>(`${this.baseurl}/${id}`);
   }
-
+  deletLinkedinComments(id:number|undefined):Observable<Array<LinkedinPost>>{
+    return this.http.delete<Array<LinkedinPost>>(`${this.baseurl}/${id}/comments`);
+  }
 }
