@@ -5,22 +5,53 @@
   
  
 <div class="container form-loyout">
-    
-    <form #linkedInForm="ngForm" (ngSubmit)="NewLinkedIn()">
+    <!--Template forms-->
+    <!-- <form #linkedInForm="ngForm" (ngSubmit)="NewLinkedIn()">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Text</label>
             <textarea type="text" class="form-control" #linkedintext=ngModel id="exampleFormControlInput1" name="inputText" [(ngModel)]="objLinkedInData.inputText" placeholder="Enter Text" required>
             </textarea>
             <span class="errormsg" *ngIf="isPostmsg===true && linkedInForm.invalid ">Please Enter Post Message is Required</span>
-            <!-- <span class="errormsg" [hidden]="linkedintext.valid || linkedintext.pristine || IsProperName(linkedintext.value)" *ngIf="IsProperName(objLinkedInData.inputText)">Please Enter Proper Message Required</span> -->
+            <!-- <span class="errormsg" [hidden]="linkedintext.valid || linkedintext.pristine || IsProperName(linkedintext.value)" *ngIf="IsProperName(objLinkedInData.inputText)">Please Enter Proper Message Required</span> --
         </div>
         <div class="mb-3">
-            <!-- <button type="button" [disabled]="!(linkedInForm.form.valid)" class="btn btn-success" style="margin-left: 91%;" (click)="SaveData()">Post</button> -->
+            <!-- <button type="button" [disabled]="!(linkedInForm.form.valid)" class="btn btn-success" style="margin-left: 91%;" (click)="SaveData()">Post</button> --
             <button type="button" class="btn btn-primary" style="margin-left: 91%;" (click)="SaveData(linkedInForm)">Add Post</button>
         </div>
         <div>
             <app-minilinkedin-list [linkedInList]="linkedIdData"></app-minilinkedin-list>
         </div>
         
-    </form>
+    </form> -->
+    <div>
+<!--Reactive forms-->
+<form [formGroup]="linkedInForm" (ngSubmit)="SaveData()">
+
+    <!-- Name -->
+    <div class="form-group input-group-lg">
+      <input class="form-control" placeholder="Name" formControlName="inputText">
+      <span class="errormsg" *ngIf="submitted && linkedInForm.invalid">Please Enter Message is Required</span>
+    </div>
+    <!-- Image Preview -->
+    <div class="form-group">
+        <div class="preview" *ngIf="previewImage && previewImage !== null">
+          <img [src]="previewImage" [alt]="">
+        </div>
+      </div>
+    
+      <!-- File Input -->
+      <div class="form-group psdding_file">
+        <input type="file" formControlName = "avatar" (change)="uploadFile($event)">
+      </div>
+    <!-- Submit -->
+    <div class="form-group">
+      <button class="btn btn-danger btn-block btn-sm" style="margin-left: 91%;margin-top: -50px;width: 100px;">Post</button>
+    </div>
+  </form>
+        <!-- <app-file-upload></app-file-upload> -->
+</div>
+<div>
+    <app-minilinkedin-list [linkedInList]="linkedIdData"></app-minilinkedin-list>
+</div>
+
 </div>

@@ -19,6 +19,7 @@ import { MinilinkedinListComponent } from './minilinkedin-list/minilinkedin-list
 import { LinkedinServiceService } from './linkedin-service.service';
 import { LinkedinProfileComponent } from './linkedin-profile/linkedin-profile.component';
 import { ForbiddenNameValidatorDirective } from './forbidden-name-validator.directive';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ForbiddenNameValidatorDirective } from './forbidden-name-validator.dire
     MinilinkedinComponent,
     MinilinkedinListComponent,
     LinkedinProfileComponent,
-    ForbiddenNameValidatorDirective
+    ForbiddenNameValidatorDirective,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,

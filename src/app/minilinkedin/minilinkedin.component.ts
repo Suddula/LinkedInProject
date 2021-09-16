@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { observable, Observable } from 'rxjs';
 import { LinkedinServiceService } from '../linkedin-service.service';
@@ -16,12 +16,26 @@ export class MinilinkedinComponent implements OnInit {
   linkedIdData:Array<LinkedInList>;
   objLinkedInData:LinkedinPost= new LinkedinPost();
   isPostmsg: boolean=false;
+  previewImage: string='';
+  linkedInForm: FormGroup;
+  percentDone: any = 0;
+  submitted: boolean =false;
+  
+  // public get contentControl(): AbstractControl | null {
+  //   return this.linkedInForm.get('inputText');
+  // }
+
   constructor(
     // private readonly fb:FormBuilder,
     public readonly linkedInService:LinkedinServiceService,
-    public readonly routes:ActivatedRoute
+    public readonly routes:ActivatedRoute,
+    public fb: FormBuilder,
   ) { 
     this.linkedIdData =new Array<LinkedInList>();
+    this.linkedInForm = this.fb.group({
+      inputText: ['',[Validators.required]],
+      avatar: [null]
+    })
   }
 
   ngOnInit(): void {
@@ -57,20 +71,56 @@ export class MinilinkedinComponent implements OnInit {
     let re  = new RegExp('^[A-Z][a-z]+\\s[A-Z][a-z]+');
     return re.test(value);
   }
-  SaveData(linkedInForm:any):void {
+  
+ 
+  SaveData():void {
      // first way writen Api call
-     if(!linkedInForm.form.valid){
-       this.isPostmsg = true;
-        return;
-     }else{
-      this.linkedInService.postLinkedin(this.objLinkedInData).subscribe(result=>{
+     this.submitted = true;
+
+      if (this.linkedInForm.invalid) {
+            this.findInvalidField();
+            return;
+        }
+
+      const postModel = new LinkedinPost();
+      postModel.inputText = this.linkedInForm.controls["inputText"].value;
+      postModel.avatar = this.previewImage;
+      this.linkedInService.postLinkedin(postModel).subscribe(result=>{
         this.linkedInService.getAllLinkedins().subscribe(list=>{
           this.linkedIdData = list;
         });
         this.isPostmsg = false;
         this.NewLinkedIn();
       });
-     }
+
+  }
+  findInvalidField() {
+  
+    const invalid = [];
+    const controls = this.linkedInForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+
+    console.log("INVALID CONROLS", invalid);
+  }
+  uploadFile(event:any) {
+
+    const fileControl = event.target as HTMLInputElement;
+    if (!fileControl || !fileControl.files || fileControl.files.length<=0) {
+      return;
+    }
+
+    const file = fileControl.files[0];
+    
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.previewImage = reader.result as string;
+    }
+    reader.readAsDataURL(file);
   }
  // Second way writen Api call
     // this.linkedInService.postLinkedin(this.objLinkedInData)
@@ -82,9 +132,9 @@ export class MinilinkedinComponent implements OnInit {
     //     });
 
 
-   public async getAllLinkedIn1(){
-    await this.linkedInService.getAllLinkedins()
-      .subscribe(data => this.linkedIdData = data);
-  }
+  //  public async getAllLinkedIn1(){
+  //   await this.linkedInService.getAllLinkedins()
+  //     .subscribe(data => this.linkedIdData = data);
+  // }
 
 }

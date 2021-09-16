@@ -8,6 +8,7 @@ export class LinkedInList{
 }
 export class LinkedinPost {
     public inputText:string ="";
+    public avatar:string ='';
 }
 export class LinkedInComments {
     public id:number | undefined;

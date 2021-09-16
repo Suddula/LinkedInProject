@@ -8,7 +8,7 @@ const routes: Routes = [
   {path:'linkedIn',component:MinilinkedinComponent,resolve:{
     linkedIdData:LinkedResolveGuard
   }},
-  { path: '',   redirectTo: '/linkedIn', pathMatch: 'full' },
+  // { path: '',   redirectTo: '/linkedIn', pathMatch: 'full' },
   {path:'my-profile',component:LinkedinProfileComponent},
 
   // {path:'**',component:MinilinkedinComponent},

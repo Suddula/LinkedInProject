@@ -22,4 +22,13 @@ describe('MinilinkedinComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('#SaveData() toggle #isPostmsg',()=>{
+  //   expect(component.isPostmsg).toBeFalsy();
+  //   component.SaveData(event);
+  //   expect(component.isPostmsg).toBeTruthy();
+  //   component.SaveData(event);
+  //   expect(component.isPostmsg).toBeFalsy();
+
+  // })
 });
