@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -34,7 +35,7 @@ export class MinilinkedinComponent implements OnInit {
     this.linkedIdData =new Array<LinkedInList>();
     this.linkedInForm = this.fb.group({
       inputText: ['',[Validators.required]],
-      avatar: [null]
+      ImageBase64: [null]
     })
   }
 
@@ -66,6 +67,10 @@ export class MinilinkedinComponent implements OnInit {
 
   NewLinkedIn():void{
     this.objLinkedInData= new LinkedinPost();
+    this.previewImage ='';
+    this.linkedInForm.controls["inputText"].setValue('');
+    this.linkedInForm.controls['ImageBase64'].setValue('');
+
   }
   IsProperName(value : string) : boolean{ 
     let re  = new RegExp('^[A-Z][a-z]+\\s[A-Z][a-z]+');
@@ -84,10 +89,11 @@ export class MinilinkedinComponent implements OnInit {
 
       const postModel = new LinkedinPost();
       postModel.inputText = this.linkedInForm.controls["inputText"].value;
-      postModel.avatar = this.previewImage;
+      postModel.ImageBase64 = this.previewImage;
       this.linkedInService.postLinkedin(postModel).subscribe(result=>{
         this.linkedInService.getAllLinkedins().subscribe(list=>{
           this.linkedIdData = list;
+          this.submitted = false;
         });
         this.isPostmsg = false;
         this.NewLinkedIn();

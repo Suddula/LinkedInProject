@@ -5,10 +5,11 @@ export class LinkedInList{
     public linkedInComments:LinkedInComments | undefined;
     public linkedInLikes:LinkedInLike | undefined;
     public highlightTrue:boolean =false;
+    public imageBase64:string |undefined;
 }
 export class LinkedinPost {
     public inputText:string ="";
-    public avatar:string ='';
+    public ImageBase64:string ='';
 }
 export class LinkedInComments {
     public id:number | undefined;

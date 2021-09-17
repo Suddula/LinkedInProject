@@ -34,3 +34,13 @@
     font-size: 10px;
     font-weight: bold;
 }
+.preview {
+    width: 200px;
+    height:200px;
+    border:solid
+  }
+.preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

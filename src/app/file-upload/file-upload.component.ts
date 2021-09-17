@@ -69,8 +69,8 @@ export class FileUploadComponent implements OnInit {
     // }else{
       // postModel.imageBase64 = this.postImage;
       this.objLinkedInData.inputText= this.form.value.name;
-      this.objLinkedInData.avatar = this.form.value.avatar;
-      this.objLinkedInData.avatar = this.postImage;
+      this.objLinkedInData.ImageBase64 = this.form.value.avatar;
+      this.objLinkedInData.ImageBase64 = this.postImage;
       this.fileUploadService.addUser(
       this.objLinkedInData
       ).subscribe(result=>{
