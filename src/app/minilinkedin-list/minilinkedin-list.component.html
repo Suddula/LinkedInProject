@@ -2,12 +2,13 @@
     <p> {{item.inputText}}</p>
    
     <div class="mb-3">
+        <!-- <button type="button" class="btn btn-link" [ngStyle]="{'color':(list.highlightTrue ||  (highlightTrue && likeindex == i)) ? 'blue': ''}" (click)="SaveLinke(i,item.id,item.highlightTrue)">Like</button><span>{{item.linkedInLikes.length}}</span> -->
         <button type="button" class="btn btn-link" (click)="SaveLinke(i,item.id,item.highlightTrue)">Like</button><span>{{item.linkedInLikes.length}}</span>
         <button type="button" class="btn btn-link" (click)="showComments(i)">Comment</button><span>{{item.linkedInComments.length}}</span>
         <button type="button" class="btn btn-link" (click)="deleteLinked(i,item.id)">Delete</button>
         
     </div>
-    <div *ngIf="item.imageBase64">
+    <div *ngIf="">
         <div class="preview">
             <img [src]="item.imageBase64" [alt]="">
           </div>
